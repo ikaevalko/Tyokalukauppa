@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('categories_create') }}">
+    {{ form.name.label }}
+    {{ form.name }}
+    {{ form.button }}
+
+    <ul>
+      {% for error in form.name.errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+</form>
+{% endblock %}

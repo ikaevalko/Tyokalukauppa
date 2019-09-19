@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('auth_login') }}">
+    {{ form.username.label }}
+    {{ form.username }}<br>
+    {{ form.password.label }}
+    {{ form.password }}
+    {{ form.button }}
+    <br>
+    <br>
+    {{ message }}
+</form>
+{% endblock %}

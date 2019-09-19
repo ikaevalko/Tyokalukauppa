@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('categories_update') }}">
+    {{ form.oldName.label }}
+    {{ form.oldName }}<br>
+    {{ form.newName.label }}
+    {{ form.newName }}
+    {{ form.button }}
+    <br>
+    <br>
+    {{ message }}
+</form>
+{% endblock %}
