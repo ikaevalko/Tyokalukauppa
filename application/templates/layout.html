@@ -1,30 +1,84 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Työkalukauppa</title>
-    </head>
+<html lang="en">
 
-    <body>
-        {% if current_user.is_authenticated %}
-        <p>
-            Kirjautunut nimellä {{ current_user.name }}. <a href="{{ url_for('auth_logout') }}">Kirjaudu ulos</a>
-        </p>
-        {% else %}
-            <a href="{{ url_for('auth_login') }}">Kirjaudu</a>
-        {% endif %}
+<head>
 
-        <ul>
-            <li><a href="{{ url_for('categories_index') }}">Kategoriat</a></li>
-            <li><a href="{{ url_for('categories_new') }}">Lisää kategoria</a></li>
-            <li><a href="{{ url_for('categories_update_form') }}">Päivitä kategoria</a></li>
-            <li><a href="{{ url_for('categories_delete_form') }}">Poista kategoria</a></li>
-        </ul>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        {% block body %}
-        <p>
-            Content
-        </p>
-        {% endblock %}
+    <title>Työkalukauppa</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body style="background-color: #f7f7f7; padding: 56px;">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #f79516;">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">TYÖKALUKAUPPA</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <div class="form-inline ml-auto">
+                    {% if current_user.is_authenticated %}
+                        <h6 class="my-auto mr-4">{{ current_user.name }}</h6>
+                        <a href="{{ url_for('auth_logout') }}" class="btn btn-secondary">Kirjaudu ulos</a>
+                    {% else %}
+                        <a href="{{ url_for('auth_login') }}" class="btn btn-primary mr-4">Kirjaudu sisään</a>
+                        <a href="{{ url_for('auth_register') }}" class="btn btn-primary">Rekisteröidy</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+    
+            <div class="col-lg-3 my-5">
+                {% if current_user.is_admin %}
+                <div class="list-group mb-3">
+                    <a href="{{ url_for('categories_new') }}" class="list-group-item text-dark">Lisää kategoria</a>
+                    <a href="{{ url_for('categories_update_form') }}" class="list-group-item text-dark">Päivitä kategoria</a>
+                    <a href="{{ url_for('categories_delete_form') }}" class="list-group-item text-dark">Poista kategoria</a>
+                </div>
+                {% endif %}
+
+                <div>
+                    {% if message is not none %}
+                        <p class="text-success">{{ message }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="list-group">
+                {% for category in categories %}
+                    <a href="#" class="list-group-item text-dark">{{ category.name }}</a>
+                {% endfor %}
+                </div>
+            </div>
+            <!-- /.col-lg-3 -->
+
+            {% block body %}
+            <p>
+                Content
+            </p>
+            {% endblock %}
+
+        </div>
+        <!-- /.row -->
+    
+    </div>
+    <!-- /.container -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     </body>
 </html>

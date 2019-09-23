@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
 
 class CategoryFormNew(FlaskForm):
-    name = StringField("Kategorian nimi", [validators.Length(min=2, max=40)])
+    name = StringField("Kategorian nimi", [validators.Length(min=2, max=24)])
     button = SubmitField("Lisää kategoria")
 
     class Meta:
