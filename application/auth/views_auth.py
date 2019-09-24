@@ -33,7 +33,7 @@ def auth_register():
     form = RegisterForm(request.form)
 
     if not form.validate():
-        return render_template("auth.registerform.html", categories = Category.query.all(), form = form)
+        return render_template("auth/registerform.html", categories = Category.query.all(), form = form)
 
     user = User(form.name.data, form.username.data, form.password.data, False)
 

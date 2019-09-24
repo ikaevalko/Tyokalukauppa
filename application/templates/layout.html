@@ -42,13 +42,6 @@
         <div class="row">
     
             <div class="col-lg-3 my-5">
-                {% if current_user.is_admin %}
-                <div class="list-group mb-3">
-                    <a href="{{ url_for('categories_new') }}" class="list-group-item text-dark">Lisää kategoria</a>
-                    <a href="{{ url_for('categories_update_form') }}" class="list-group-item text-dark">Päivitä kategoria</a>
-                    <a href="{{ url_for('categories_delete_form') }}" class="list-group-item text-dark">Poista kategoria</a>
-                </div>
-                {% endif %}
 
                 <div>
                     {% if message is not none %}
@@ -56,9 +49,22 @@
                     {% endif %}
                 </div>
 
+                {% if current_user.is_admin %}
+                <div class="list-group mb-3">
+                    <a href="{{ url_for('categories_new') }}" class="list-group-item text-dark">Lisää kategoria</a>
+                    <a href="{{ url_for('categories_update_form') }}" class="list-group-item text-dark">Päivitä kategoria</a>
+                    <a href="{{ url_for('categories_delete_form') }}" class="list-group-item text-dark">Poista kategoria</a>
+                </div>
+                <div class="list-group mb-3">
+                    <a href="{{ url_for('products_new') }}" class="list-group-item text-dark">Lisää tuote</a>
+                    <!--<a href="{{ url_for('products_delete_form') }}" class="list-group-item text-dark">Päivitä tuote</a>-->
+                    <a href="{{ url_for('products_delete_form') }}" class="list-group-item text-dark">Poista tuote</a>
+                </div>
+                {% endif %}
+
                 <div class="list-group">
                 {% for category in categories %}
-                    <a href="#" class="list-group-item text-dark">{{ category.name }}</a>
+                    <a href="{{ url_for('category_show', category_id=category.id) }}" class="list-group-item text-dark text-truncate">{{ category.name }}</a>
                 {% endfor %}
                 </div>
             </div>

@@ -18,8 +18,16 @@
         {{ form.button }}
     </div>
 
-    {% for error in form.errors %}
-        <p class="my-5 ml-5">{{ error }}</p>
+    {% for error in form.name.errors %}
+        <p class="my-2 ml-5">{{ form.name.label }}: {{ error }}</p>
+    {% endfor %}
+
+    {% for error in form.username.errors %}
+        <p class="my-2 ml-5">{{ form.username.label }}: {{ error }}</p>
+    {% endfor %}
+
+    {% for error in form.password.errors %}
+        <p class="my-2 ml-5">{{ form.password.label }}: {{ error }}</p>
     {% endfor %}
 </form>
 {% endblock %}

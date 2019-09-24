@@ -18,6 +18,9 @@ from application import views_main
 from application.categories import models_categories
 from application.categories import views_categories
 
+from application.products import models_products
+from application.products import views_products
+
 from application.auth import models_auth
 from application.auth import views_auth
 

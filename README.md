@@ -1,4 +1,4 @@
-## Työkalukauppa
+﻿## Työkalukauppa
 
 Harjoitustyön aiheena on verkkokauppa, jossa myydään rakennustarvikkeita. Sovelluksen toiminnallisuuksiin kuuluu mm. tuotekategorioiden, tuotteiden ja käyttäjien hallinnointi, sekä tilausten tekeminen.
 
@@ -7,3 +7,7 @@ Harjoitustyön aiheena on verkkokauppa, jossa myydään rakennustarvikkeita. Sov
 [Käyttötapaukset](documentation/Käyttötapaukset.md)
 
 [Tietokantakaavio](documentation/Tietokantakaavio.png)
+
+Ylläpitäjän näkymiin päästäkseen on kirjauduttava seuraavilla tunnuksilla:
+Käyttäjänimi: admin
+Salasana: 12345

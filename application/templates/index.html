@@ -6,53 +6,19 @@
 
     <div class="row">
 
+        {% for product in products %}
         <div class="col-lg-5 col-md-6 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-            <h4 class="card-title">
-                <a href="#" class="stretched-link text-dark">Porakone</a>
-            </h4>
-            <h5>$24.99</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#" class="text-dark">{{ product.name }}</a>
+                    </h4>
+                    <h5>{{ product.price }}</h5>
+                    <p class="card-text text-truncate">{{ product.desc }}</p>
+                </div>
             </div>
         </div>
-        </div>
-
-        <div class="col-lg-5 col-md-6 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-            <h4 class="card-title">
-                <a href="#" class="stretched-link text-dark">Moottorisaha</a>
-            </h4>
-            <h5>$24.99</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-            </div>
-        </div>
-        </div>
-
-        <div class="col-lg-5 col-md-6 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-            <h4 class="card-title">
-                <a href="#" class="stretched-link text-dark">Puuhöylä</a>
-            </h4>
-            <h5>$24.99</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-            </div>
-        </div>
-        </div>
-
-        <div class="col-lg-5 col-md-6 mb-4">
-        <div class="card h-100">
-            <div class="card-body">
-            <h4 class="card-title">
-                <a href="#" class="stretched-link text-dark">Kulmahiomakone</a>
-            </h4>
-            <h5>$24.99</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-            </div>
-        </div>
-        </div>
+        {% endfor %}
 
     </div>
     <!-- /.row -->
