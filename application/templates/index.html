@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    
+
 <div class="col-lg-9 my-5">
+
+    {% if title is not none and title|length > 0 %}
+    <h2 class="mb-5 ml-3">{{ title }}</h2>
+    {% endif %}
 
     <div class="row">
 

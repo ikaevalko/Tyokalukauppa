@@ -55,6 +55,9 @@ def categories_update():
 
     updateForm = CategoryFormUpdate(request.form)
 
+    if not updateForm.validate():
+        return render_template("categories/update_categories.html", categories = Category.query.all(), form = updateForm)
+
     # Tarkistetaan päivitettävän kategorian olemassaolo
     if category_exists(updateForm.oldName.data):
         # Päivitetään kategoria
@@ -63,7 +66,8 @@ def categories_update():
         db.session().commit()
         return redirect(url_for("index", action_message = "Päivitettiin kategoria " + ctgr.name))
 
-    return render_template("categories/update_categories.html", categories = Category.query.all(), form = CategoryFormUpdate(), error = "Kategorian päivittäminen epäonnistui")
+    updateForm.oldName.errors.append("Kategorian päivittäminen epäonnistui")
+    return render_template("categories/update_categories.html", categories = Category.query.all(), form = updateForm)
 
 @app.route("/categories/delete/")
 @login_required
@@ -95,7 +99,7 @@ def categories_delete():
 def category_show(category_id):
     category_products = Product.query.filter(Product.category_id == category_id).limit(8)
 
-    return render_template("index.html", categories = Category.query.all(), products = category_products)
+    return render_template("index.html", categories = Category.query.all(), products = category_products, title = request.args.get("title"))
 
 def category_exists(name):
     return db.session().query(exists().where(Category.name == name)).scalar()

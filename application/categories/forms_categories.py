@@ -10,7 +10,7 @@ class CategoryFormNew(FlaskForm):
 
 class CategoryFormUpdate(FlaskForm):
     oldName = StringField("Vanha nimi")
-    newName = StringField("Uusi nimi")
+    newName = StringField("Uusi nimi", [validators.Length(min=2, max=24)])
     button = SubmitField("Päivitä kategoria")
 
     class Meta:

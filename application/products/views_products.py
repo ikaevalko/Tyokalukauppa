@@ -42,31 +42,68 @@ def products_create():
 
     return redirect(url_for("index", action_message = "Lisättiin tuote " + product.name))
 
-#@app.route("/products/update")
-#@login_required
-#def products_update_form():
-#    if not current_user.is_admin:
-#        return redirect(url_for("index"))
-#
-#    return render_template("products/update_products.html", categories = Category.query.all(), form = ProductFormUpdate())
-#
-#@app.route("/products/update", methods=["POST"])
-#@login_required
-#def products_update():
-#    if not current_user.is_admin:
-#        return redirect(url_for("index"))
-#
-#    updateForm = ProductFormUpdate(request.form)
-#
-#    # Tarkistetaan päivitettävän tuotteen olemassaolo
-#    if product_exists(updateForm.oldName.data):
-#        # Päivitetään tuote
-#        product = db.session().query(Product).filter(Product.name == updateForm.oldName.data).first()
-#        product.name = updateForm.newName.data
-#        db.session().commit()
-#        return redirect(url_for("index", action_message = "Päivitettiin tuote " + product.name))
-#
-#    return render_template("products/update_products.html", categories = Category.query.all(), form = ProductFormUpdate(), error = "Tuotteen päivittäminen epäonnistui")
+@app.route("/products/update")
+@login_required
+def products_update_get():
+    if not current_user.is_admin:
+        return redirect(url_for("index"))
+
+    return render_template("products/update_products.html", categories = Category.query.all(), form = ProductFormUpdate(), valid_product = False)
+
+@app.route("/products/update/form", methods=["POST"])
+@login_required
+def products_update_form():
+    if not current_user.is_admin:
+        return redirect(url_for("index"))
+
+    form = ProductFormUpdate(request.form)
+
+    # Tarkistetaan päivitettävän tuotteen olemassaolo
+    if not product_exists(form.oldName.data):
+        error_list = list(form.oldName.errors)
+        error_list.append("Tuotetta ei löytynyt")
+        form.oldName.errors = tuple(error_list)
+        return render_template("products/update_products.html", categories = Category.query.all(), form = form, valid_product = False)
+
+    # Jos tuote löytyi, tuodaan sen nykyiset tiedot lomakkeelle
+    old_product = db.session().query(Product).filter(Product.name == form.oldName.data).first()
+    form.name.data = old_product.name
+    form.desc.data = old_product.desc
+    form.price.data = old_product.price
+    form.quantity.data = old_product.quantity
+    form.category.data = Category.query.filter(Category.id == old_product.category_id).first().name
+
+    form.hiddenName.data = old_product.name
+
+    return render_template("products/update_products.html", categories = Category.query.all(), form = form, valid_product = True)
+
+@app.route("/products/update", methods=["POST"])
+@login_required
+def products_update():
+    if not current_user.is_admin:
+        return redirect(url_for("index"))
+
+    updateForm = ProductFormUpdate(request.form)
+
+    # Validoidaan syöte
+    if not updateForm.validate():
+           return render_template("products/update_products.html", categories = Category.query.all(), form = updateForm, valid_product = True)
+
+    # Tarkistetaan lomakkeen kategorian olemassaolo
+    if not category_exists(updateForm.category.data):
+        updateForm.category.errors.append("No such category found")
+        return render_template("products/update_products.html", categories = Category.query.all(), form = updateForm, valid_product = True)
+
+    ctgr = db.session().query(Category).filter(Category.name == updateForm.category.data).first()
+    product = db.session().query(Product).filter(Product.name == updateForm.hiddenName.data).first()
+    product.name = updateForm.name.data
+    product.desc = updateForm.desc.data
+    product.price = updateForm.price.data
+    product.quantity = updateForm.quantity.data
+    product.category_id = ctgr.id
+    db.session().commit()
+
+    return redirect(url_for("index", action_message = "Päivitettiin tuote " + product.name))
 
 @app.route("/products/delete/")
 @login_required

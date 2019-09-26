@@ -2,7 +2,7 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('categories_update') }}">
-    <div class="col-lg-9 my-5 ml-5">
+    <div class="col-lg-5 my-5 ml-5">
         <div class="form-group">
             {{ form.oldName.label }}
             {{ form.oldName }}
@@ -14,6 +14,12 @@
         {{ form.button }}
     </div>
 
-    <p class="my-5 ml-5">{{ error }}</p>
+    {% for error in form.oldName.errors %}
+        <p class="my-5 ml-5">{{ error }}</p>
+    {% endfor %}
+
+    {% for error in form.newName.errors %}
+        <p class="my-5 ml-5">{{ form.newName.label }}: {{ error }}</p>
+    {% endfor %}
 </form>
 {% endblock %}

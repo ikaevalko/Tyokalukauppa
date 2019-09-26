@@ -2,7 +2,7 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('categories_create') }}">
-	<div class="col-lg-9 my-5 ml-5">
+	<div class="col-lg-5 my-5 ml-5">
     	<div class="form-group">
         	{{ form.name.label }}
         	{{ form.name }}
@@ -10,10 +10,8 @@
     	{{ form.button }}
   	</div>
 
-    <ul>
-      {% for error in form.name.errors %}
-      <li>{{ error }}</li>
-      {% endfor %}
-    </ul>
+	{% for error in form.name.errors %}
+		<p class="my-5 ml-5">{{ form.name.label }}: {{ error }}</p>
+	{% endfor %}
 </form>
 {% endblock %}

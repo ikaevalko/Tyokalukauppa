@@ -44,7 +44,7 @@
             <div class="col-lg-3 my-5">
 
                 <div>
-                    {% if message is not none %}
+                    {% if message is not none and message|length > 0 %}
                         <p class="text-success">{{ message }}</p>
                     {% endif %}
                 </div>
@@ -57,14 +57,14 @@
                 </div>
                 <div class="list-group mb-3">
                     <a href="{{ url_for('products_new') }}" class="list-group-item text-dark">Lisää tuote</a>
-                    <!--<a href="{{ url_for('products_delete_form') }}" class="list-group-item text-dark">Päivitä tuote</a>-->
+                    <a href="{{ url_for('products_update_get') }}" class="list-group-item text-dark">Päivitä tuote</a>
                     <a href="{{ url_for('products_delete_form') }}" class="list-group-item text-dark">Poista tuote</a>
                 </div>
                 {% endif %}
 
                 <div class="list-group">
                 {% for category in categories %}
-                    <a href="{{ url_for('category_show', category_id=category.id) }}" class="list-group-item text-dark text-truncate">{{ category.name }}</a>
+                    <a href="{{ url_for('category_show', category_id=category.id, title=category.name) }}" class="list-group-item text-dark text-truncate">{{ category.name }}</a>
                 {% endfor %}
                 </div>
             </div>
