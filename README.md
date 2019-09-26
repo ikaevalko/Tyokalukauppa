@@ -8,6 +8,6 @@ Harjoitustyön aiheena on verkkokauppa, jossa myydään rakennustarvikkeita. Sov
 
 [Tietokantakaavio](documentation/Tietokantakaavio.png)
 
-Ylläpitäjän näkymiin päästäkseen on kirjauduttava seuraavilla tunnuksilla:
-Käyttäjänimi: admin
+Ylläpitäjän näkymiin päästäkseen on kirjauduttava seuraavilla tunnuksilla: <br>
+Käyttäjänimi: admin <br>
 Salasana: 12345
