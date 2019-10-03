@@ -8,7 +8,7 @@ class User(db.Model):
 
     name = db.Column(db.String(32), nullable=False)
     username = db.Column(db.String(32), nullable=False)
-    password = db.Column(db.String(32), nullable=False)
+    password = db.Column(db.String(64), nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, name, username, password, is_admin):
