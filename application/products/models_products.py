@@ -7,7 +7,7 @@ class Product(db.Model):
     price = db.Column(db.Numeric(6, 2), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
-    category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=True)
 
     def __init__(self, name, desc, price, quantity, category_id):
         self.name = name

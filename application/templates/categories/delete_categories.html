@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<form method="POST" action="{{ url_for('categories_delete') }}">
+<form method="POST" action="{{ url_for('categories_delete') }}" onsubmit="return confirm('Kaikki kategoriaan liitetyt tuotteet poistetaan')">
     <div class="col-lg-5 my-5 ml-5">
         <div class="form-group">
             {{ form.name.label }}

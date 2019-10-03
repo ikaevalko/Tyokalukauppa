@@ -5,12 +5,10 @@ class User(db.Model):
     __tablename__ = "account"
 
     id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
-    name = db.Column(db.String(144), nullable=False)
-    username = db.Column(db.String(64), nullable=False)
-    password = db.Column(db.String(64), nullable=False)
+    name = db.Column(db.String(32), nullable=False)
+    username = db.Column(db.String(32), nullable=False)
+    password = db.Column(db.String(32), nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, name, username, password, is_admin):

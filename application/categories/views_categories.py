@@ -2,8 +2,9 @@ from application import app, db
 from flask import render_template, request, redirect, url_for
 from application.categories.models_categories import Category
 from application.products.models_products import Product
-from sqlalchemy import exists
+from sqlalchemy import exists, asc, desc
 from application.categories.forms_categories import CategoryFormNew, CategoryFormUpdate, CategoryFormDelete
+from application.forms_main import OrderByForm
 from flask_login import current_user, login_required
 
 @app.route("/categories/new/")
@@ -97,9 +98,8 @@ def categories_delete():
 
 @app.route("/categories/<category_id>/")
 def category_show(category_id):
-    category_products = Product.query.filter(Product.category_id == category_id).limit(8)
-
-    return render_template("index.html", categories = Category.query.all(), products = category_products, title = request.args.get("title"))
+    return render_template("index.html", categories = Category.query.all(), products = Product.query.filter(Product.category_id == category_id),\
+                                title = request.args.get("title"))
 
 def category_exists(name):
     return db.session().query(exists().where(Category.name == name)).scalar()

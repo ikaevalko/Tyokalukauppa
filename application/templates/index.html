@@ -2,11 +2,22 @@
 
 {% block body %}
 
-<div class="col-lg-9 my-5">
+<div class="col-lg-9 my-4">
 
-    {% if title is not none and title|length > 0 %}
-    <h2 class="mb-5 ml-3">{{ title }}</h2>
-    {% endif %}
+    <div class="row mb-4">
+        <div class="col-lg-7">
+            {% if title is not none and title|length > 0 %}
+            <h2>{{ title }}</h2>
+            {% endif %}
+        </div>
+        <div class="col-auto">
+            {% if order_by_form is not none and order_by_form is defined%}
+            <form method="POST" action="{{ url_for('index') }}">
+                {{ order_by_form.options(**{"onchange":"this.form.submit()"}) }}
+            </form>
+            {% endif %}
+        </div>
+    </div>
 
     <div class="row">
 

@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <div class="form-inline ml-auto">
                     {% if current_user.is_authenticated %}
-                        <h6 class="my-auto mr-4">{{ current_user.name }}</h6>
+                        <p class="my-auto mr-4">{{ current_user.name }}</p>
                         <a href="{{ url_for('auth_logout') }}" class="btn btn-secondary">Kirjaudu ulos</a>
                     {% else %}
                         <a href="{{ url_for('auth_login') }}" class="btn btn-primary mr-4">Kirjaudu sisään</a>

@@ -3,7 +3,18 @@
 ### 1. Tuotekategoriat
 
 - Ylläpitäjä voi lisätä tuotekategorioita tietokantaan. Kategorialle on määriteltävä nimi lisäämisen yhteydessä.
+
+SQL-kysely kategorian olemassaolon tarkistamiselle:
+SELECT EXISTS (SELECT * FROM category WHERE category.name = ?)
+
+SQL-kysely kategorian lisäämiselle:
+INSERT INTO category (name) VALUES (?)
+
 - Ylläpitäjä voi muokata olemassa olevien tuotekategorioiden nimiä.
+
+SQL-kysely kategorian päivittämiselle:
+UPDATE category SET name=? WHERE category.id = ?
+
 - Asiakas tai ylläpitäjä voi hakea tuotekategorioita nimellä.
 - Asiakas tai ylläpitäjä voi listata kaikki tuotekategoriat.
 
