@@ -1,6 +1,6 @@
 ﻿## Tietokantarakenne
 
-![](/Tietokantakaavio.png)
+![](documentation/Tietokantakaavio.png)
 
 ### Account
 

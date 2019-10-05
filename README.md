@@ -2,12 +2,18 @@
 
 Harjoitustyön aiheena on verkkokauppa, jossa myydään rakennustarvikkeita. Sovelluksen toiminnallisuuksiin kuuluu mm. tuotekategorioiden, tuotteiden ja käyttäjien hallinnointi, sekä tilausten tekeminen.
 
-<https://tyokalukauppa.herokuapp.com/>
-
-[Käyttötapaukset](documentation/Käyttötapaukset.md)
-
-[Tietokantakaavio](documentation/Tietokantakaavio.png)
-
 Ylläpitäjän näkymiin päästäkseen on kirjauduttava seuraavilla tunnuksilla: <br>
 Käyttäjänimi: admin <br>
 Salasana: 12345
+
+<https://tyokalukauppa.herokuapp.com/>
+
+[Asennusohje](documentation/Asennusohje.md)
+
+[Käyttöohje](documentation/Käyttöohje.md)
+
+[Käyttötapaukset](documentation/Käyttötapaukset.md)
+
+[Tietokantarakenne](documentation/Tietokantarakenne.md)
+
+![](documentation/Tietokantakaavio.png)
