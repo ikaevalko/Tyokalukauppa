@@ -1,7 +1,7 @@
 ﻿## Käyttöohje
 
-#### Ylläpitäjän näkymät
-Ylläpitäjän oikeudet omaavalla käyttäjällä on mahdollista hallinnoida kategorioita ja tuotteita. Ylläpitäjän tunnuksilla kirjautuneelle käyttäjälle näytetään sivun vasemmalla puolella linkit hallintanäkymiin. Näiden linkkien alla on listattu kaikki kategoriat. Sivun keskellä näytetään näkymästä riippuen joko tuotteita, lomakkeita tai tilastoja.
+### Ylläpitäjän näkymät
+Ylläpitäjän oikeudet omaavalla käyttäjällä on mahdollista hallinnoida kategorioita ja tuotteita. Kirjautumis- ja rekisteröintinäkymiin pääsee oikean yläkulman linkeistä. Ylläpitäjän tunnuksilla kirjautuneelle käyttäjälle näytetään sivun vasemmalla puolella linkit hallintanäkymiin. Näiden linkkien alla on listattu kaikki kategoriat. Sivun keskellä näytetään näkymästä riippuen joko tuotteita, lomakkeita tai tilastoja.
 
 Linkistä "**Lisää kategoria**" avautuu lomake, johon täytetään kategorian nimi. Kun kategoria lisätään napista "Lisää kategoria", palataan etusivulle. Mikäli lomake täytetään virheellisesti, sivulle tulostuu kuvaavia virheviestejä ja kategoriaa ei lisätä.
 
@@ -15,5 +15,5 @@ Linkistä "**Päivitä tuote**" avautuu lomake, jolla voidaan muuttaa tuotteiden
 
 Linkistä "**Poista tuote**" avautuu lomake, jolla voidaan poistaa tuote nimen perusteella. Poistettavan tuotteen on oltava olemassa. Sivulle tulostuu virheviesti, jos tuotetta ei löydy.
 
-#### Asiakkaan näkymät
+### Asiakkaan näkymät
 Asiakaskäyttäjällä tai kirjautumattomana on mahdollista tarkastella tuotteita ja kategorioita. Tilausten tekemistä ei ole vielä toteutettu.
