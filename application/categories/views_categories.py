@@ -40,7 +40,7 @@ def categories_create():
 
     return redirect(url_for("index", action_message = "Lisättiin kategoria " + ctgr.name))
 
-@app.route("/categories/update")
+@app.route("/categories/update/")
 @login_required
 def categories_update_form():
     if not current_user.is_admin:
@@ -48,7 +48,7 @@ def categories_update_form():
 
     return render_template("categories/update_categories.html", categories = Category.query.all(), form = CategoryFormUpdate())
 
-@app.route("/categories/update", methods=["POST"])
+@app.route("/categories/update/", methods=["POST"])
 @login_required
 def categories_update():
     if not current_user.is_admin:
@@ -96,10 +96,32 @@ def categories_delete():
 
     return render_template("categories/delete_categories.html", categories = Category.query.all(), form = CategoryFormDelete(), error = "Kategorian poistaminen epäonnistui")
 
-@app.route("/categories/<category_id>/")
+@app.route("/categories/<category_id>/", methods=["GET", "POST"])
 def category_show(category_id):
-    return render_template("index.html", categories = Category.query.all(), products = Product.query.filter(Product.category_id == category_id),\
-                                title = request.args.get("title"))
+    if request.method == "GET":
+        return render_template("index.html", categories = Category.query.all(),\
+                                products = Product.query.filter(Product.category_id == category_id),\
+                                order_by_form = OrderByForm(), ctgr_page = category_id, title = request.args.get("title"))
+
+    order_by_form = OrderByForm(request.form)
+    i = int(order_by_form.options.data)
+
+    if i is 0:
+        return render_template("index.html", categories = Category.query.all(),\
+                                products = Product.query.filter(Product.category_id == category_id),\
+                                order_by_form = order_by_form, ctgr_page = category_id, title = request.args.get("title"))
+    elif i is 1:
+        return render_template("index.html", categories = Category.query.all(),\
+                                products = Product.query.order_by(asc(Product.price)).filter(Product.category_id == category_id),\
+                                order_by_form = order_by_form, ctgr_page = category_id, title = request.args.get("title"))
+    elif i is 2:
+        return render_template("index.html", categories = Category.query.all(),\
+                                products = Product.query.order_by(desc(Product.price)).filter(Product.category_id == category_id),\
+                                order_by_form = order_by_form, ctgr_page = category_id, title = request.args.get("title"))
+
+    return render_template("index.html", categories = Category.query.all(),\
+                                products = Product.query.filter(Product.category_id == category_id),\
+                                order_by_form = order_by_form, ctgr_page = category_id, title = request.args.get("title"))
 
 def category_exists(name):
     return db.session().query(exists().where(Category.name == name)).scalar()

@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="col-lg-6 my-5 ml-5">
+
+    <div class="row mb-4 justify-content-between">
+        <div class="col-lg-2">
+            <h2>Ostoskori</h2>
+        </div>
+        <div class="col-lg-2">
+            {% if products is not none and products|length > 0 %}
+            <a href="{{ url_for('empty_cart') }}" class="btn btn-secondary">Tyhjennä</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nimi</th>
+                        <th scope="col">Hinta</th>
+                        <th scope="col">Määrä</th>
+                    </tr>
+                </thead>
+            </thead>
+            <tbody>
+                {% if products is not none and products|length > 0 %}
+                {% for key in products %}
+                <tr>
+                    <td>{{ products[key]["name"] }}</td>
+                    <td>{{ products[key]["price"] }}</td>
+                    <td>{{ products[key]["amount"] }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th scope="row">Kokonaishinta: </th>
+                    <th scope="row" colspan="2">{{ total }}</th>
+                </tr>
+                {% endif %}
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-between">
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-2">
+            {% if products is not none and products|length > 0 %}
+            <!--(WIP) <a href="{{ url_for('orders_new') }}" class="btn btn-primary">Tilaa</a>-->
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}

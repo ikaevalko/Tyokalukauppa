@@ -1,11 +1,12 @@
 from application import app, db
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from application.categories.models_categories import Category
 from application.products.models_products import Product
 from application.categories.views_categories import category_exists
 from sqlalchemy import exists
 from application.products.forms_products import ProductFormNew, ProductFormUpdate, ProductFormDelete
 from flask_login import current_user, login_required
+from decimal import Decimal
 
 @app.route("/products/new/")
 @login_required
@@ -42,7 +43,7 @@ def products_create():
 
     return redirect(url_for("index", action_message = "Lisättiin tuote " + product.name))
 
-@app.route("/products/update")
+@app.route("/products/update/")
 @login_required
 def products_update_get():
     if not current_user.is_admin:
@@ -50,7 +51,7 @@ def products_update_get():
 
     return render_template("products/update_products.html", categories = Category.query.all(), form = ProductFormUpdate(), valid_product = False)
 
-@app.route("/products/update/form", methods=["POST"])
+@app.route("/products/update/form/", methods=["POST"])
 @login_required
 def products_update_form():
     if not current_user.is_admin:
@@ -77,7 +78,7 @@ def products_update_form():
 
     return render_template("products/update_products.html", categories = Category.query.all(), form = form, valid_product = True)
 
-@app.route("/products/update", methods=["POST"])
+@app.route("/products/update/", methods=["POST"])
 @login_required
 def products_update():
     if not current_user.is_admin:
@@ -94,6 +95,7 @@ def products_update():
         updateForm.category.errors.append("No such category found")
         return render_template("products/update_products.html", categories = Category.query.all(), form = updateForm, valid_product = True)
 
+    # Päivitetään tuote
     ctgr = db.session().query(Category).filter(Category.name == updateForm.category.data).first()
     product = db.session().query(Product).filter(Product.name == updateForm.hiddenName.data).first()
     product.name = updateForm.name.data
@@ -130,6 +132,55 @@ def products_delete():
         return redirect(url_for("index", action_message = "Poistettiin tuote " + product.name))
 
     return render_template("products/delete_products.html", categories = Category.query.all(), form = ProductFormDelete(), error = "Tuotteen poistaminen epäonnistui")
+
+@app.route("/cart/add/<product_id>/")
+@login_required
+def add_product_to_cart(product_id):
+    if current_user.is_admin:
+        return redirect(url_for("index"))
+
+    product = db.session().query(Product).filter(Product.id == product_id).first()
+    amount = 1
+    cartDict = {str(product.id) : {"name" : product.name, "price" : str(product.price), "amount" : str(amount)}}
+
+    session.modified = True
+
+    # Lisätään tuote ostoskoriin
+    if "cart" not in session:
+        session["cart"] = cartDict
+    else:
+        session["cart"].update(cartDict)
+
+    return redirect(url_for("show_cart"))
+
+@app.route("/cart/")
+@login_required
+def show_cart():
+    if current_user.is_admin:
+        return redirect(url_for("index"))
+
+    if "cart" not in session:
+        return render_template("orders/list_cart.html", categories = Category.query.all())
+
+    total = 0
+    values = []
+
+    for value in session["cart"].values():
+        values.append(Decimal(value["price"]))
+
+    total = sum(values)
+
+    return render_template("orders/list_cart.html", categories = Category.query.all(), products = session["cart"], total = total)
+
+@app.route("/cart/empty/")
+@login_required
+def empty_cart():
+    if current_user.is_admin:
+        return redirect(url_for("index"))
+
+    # Tyhjennetään ostoskori
+    session.pop("cart", None)
+    return redirect(url_for("index", action_message = "Tyhjennettiin ostoskori"))
 
 def product_exists(name):
     return db.session().query(exists().where(Product.name == name)).scalar()
