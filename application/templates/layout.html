@@ -19,7 +19,7 @@
 <body style="background-color: #f7f7f7; padding: 56px;">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #f79516;">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #f79516; box-shadow: 0 0 10px grey;">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">TYÖKALUKAUPPA</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,6 +35,9 @@
                             {% if "cart" in session %}
                                 {{ session["cart"] | length }}
                             {% endif %}
+                        </a>
+                        <a href="{{ url_for('list_orders') }}" class="btn btn-outline-light my-auto mr-4">
+                            <i class="fas fa-truck"></i>
                         </a>
                         {% endif %}
                         <a href="{{ url_for('auth_logout') }}" class="btn btn-secondary">Kirjaudu ulos</a>
@@ -62,14 +65,16 @@
 
                 {% if current_user.is_admin %}
                 <div class="list-group mb-3">
-                    <a href="{{ url_for('categories_new') }}" class="list-group-item text-dark">Lisää kategoria</a>
-                    <a href="{{ url_for('categories_update_form') }}" class="list-group-item text-dark">Päivitä kategoria</a>
-                    <a href="{{ url_for('categories_delete_form') }}" class="list-group-item text-dark">Poista kategoria</a>
+                    <a href="{{ url_for('list_orders') }}" class="list-group-item text-dark">Tilaukset</a>
+                </div>
+                <div class="list-group mb-3">
+                    <a href="{{ url_for('list_statistics') }}" class="list-group-item text-dark">Tilastot</a>
                 </div>
                 <div class="list-group mb-3">
                     <a href="{{ url_for('products_new') }}" class="list-group-item text-dark">Lisää tuote</a>
-                    <a href="{{ url_for('products_update_get') }}" class="list-group-item text-dark">Päivitä tuote</a>
-                    <a href="{{ url_for('products_delete_form') }}" class="list-group-item text-dark">Poista tuote</a>
+                    <a href="{{ url_for('categories_new') }}" class="list-group-item text-dark">Lisää kategoria</a>
+                    <a href="{{ url_for('categories_update_form') }}" class="list-group-item text-dark">Päivitä kategoria</a>
+                    <a href="{{ url_for('categories_delete_form') }}" class="list-group-item text-dark">Poista kategoria</a>
                 </div>
                 {% endif %}
 

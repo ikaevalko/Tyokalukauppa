@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, validators
+from wtforms import StringField, SubmitField, SelectField, validators
 
 class CategoryFormNew(FlaskForm):
     name = StringField("Kategorian nimi", [validators.Length(min=2, max=24)])
@@ -9,7 +9,7 @@ class CategoryFormNew(FlaskForm):
         csrf = False
 
 class CategoryFormUpdate(FlaskForm):
-    oldName = StringField("Vanha nimi")
+    categories = SelectField("Päivitettävä kategoria", coerce=int)
     newName = StringField("Uusi nimi", [validators.Length(min=2, max=24)])
     button = SubmitField("Päivitä kategoria")
 
@@ -17,7 +17,7 @@ class CategoryFormUpdate(FlaskForm):
         csrf = False
 
 class CategoryFormDelete(FlaskForm):
-    name = StringField("Kategorian nimi")
+    categories = SelectField("Valitse kategoria", coerce=int)
     button = SubmitField("Poista kategoria")
 
     class Meta:

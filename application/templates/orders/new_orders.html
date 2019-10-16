@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<form method="POST" action="{{ url_for('index') }}">
+<form method="POST" action="{{ url_for('orders_new') }}">
+    
     <div class="col-lg-5 my-5 ml-5">
         <div class="form-group">
             {{ form.address.label }}
@@ -17,5 +18,17 @@
         </div>
         {{ form.button }}
     </div>
+
+    {% for error in form.address.errors %}
+        <p class="my-2 ml-5 text-wrap">{{ form.address.label }}: {{ error }}</p>
+    {% endfor %}
+
+    {% for error in form.postal_code.errors %}
+        <p class="my-2 ml-5 text-wrap">{{ form.postal_code.label }}: {{ error }}</p>
+    {% endfor %}
+
+    {% for error in form.city.errors %}
+        <p class="my-2 ml-5 text-wrap">{{ form.city.label }}: {{ error }}</p>
+    {% endfor %}
 </form>
 {% endblock %}

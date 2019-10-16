@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="col-lg-6 my-5 ml-5">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="mb-4">Myydyimmät tuotteet</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nimi</th>
+                        <th scope="col">Hinta</th>
+                        <th scope="col">Kpl myyty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in most_sold %}
+                        <tr>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <h2 class="mb-4">Vähiten myydyt tuotteet</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nimi</th>
+                        <th scope="col">Hinta</th>
+                        <th scope="col">Kpl myyty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in least_sold %}
+                        <tr>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+            <div class="col-lg-12">
+                <h2 class="mb-4">Hintojen keskiarvot kategorioittain</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Kategoria</th>
+                            <th scope="col">Hintojen keskiarvo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in avg_prices %}
+                            <tr>
+                                <td>{{ row[0] }}</td>
+                                <td>{{ row[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

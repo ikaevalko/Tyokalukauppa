@@ -2,24 +2,27 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('categories_update') }}">
+
     <div class="col-lg-5 my-5 ml-5">
+
         <div class="form-group">
-            {{ form.oldName.label }}
-            {{ form.oldName }}
+            <div class="text-nowrap">{{ form.categories.label }}</div>
+            {{ form.categories }}
         </div>
         <div class="form-group">
             {{ form.newName.label }}
             {{ form.newName }}
         </div>
         {{ form.button }}
+        
     </div>
 
-    {% for error in form.oldName.errors %}
-        <p class="my-5 ml-5">{{ error }}</p>
+    {% for error in form.categories.errors %}
+        <p class="my-5 ml-5 text-wrap">{{ form.categories.label }}: {{ error }}</p>
     {% endfor %}
 
     {% for error in form.newName.errors %}
-        <p class="my-5 ml-5">{{ form.newName.label }}: {{ error }}</p>
+        <p class="my-5 ml-5 text-wrap">{{ form.newName.label }}: {{ error }}</p>
     {% endfor %}
 </form>
 {% endblock %}

@@ -11,6 +11,8 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False)
 
+    orders = db.relationship("Order", backref="account")
+
     def __init__(self, name, username, password, is_admin):
         self.name = name
         self.username = username

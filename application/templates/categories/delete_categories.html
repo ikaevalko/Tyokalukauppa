@@ -2,12 +2,17 @@
 
 {% block body %}
 <form method="POST" action="{{ url_for('categories_delete') }}" onsubmit="return confirm('Kaikki kategoriaan liitetyt tuotteet poistetaan')">
+
     <div class="col-lg-5 my-5 ml-5">
+
         <div class="form-group">
-            {{ form.name.label }}
-            {{ form.name }}
+            <div class="text-nowrap">{{ form.categories.label }}</div>
+            {{ form.categories }}
         </div>
-        {{ form.button }}
+
+        <div class="form-group mt-5">
+            {{ form.button }}
+        </div>
     </div>
 
     <p class="my-5 ml-5">{{ error }}</p>

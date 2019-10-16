@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="col-lg-9 my-5">
+
+    <div class="col-lg-10">
+        <div class="row mb-4">
+            <div class="col-lg-1 d-inline">
+                <a href="{{ url_for('list_orders') }}" class="btn btn-outline-dark">
+                    <i class="fas fa-chevron-left my-2"></i>
+                </a>
+            </div>
+            <div class="col-lg-6 d-inline">
+                <h2>Tilaus #{{ order_id }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nimi</th>
+                        <th scope="col">Hinta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if products is not none %}
+                        {% for row in rows %}
+                            {% for product in row.products %}
+                            <tr>
+                                <td>{{ product.name }}</td>
+                                <td>{{ product.price }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
