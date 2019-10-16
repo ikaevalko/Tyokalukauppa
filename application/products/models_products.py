@@ -4,7 +4,7 @@ from sqlalchemy.sql import text
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
-    desc = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=False)
     price = db.Column(db.Numeric(6, 2), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
@@ -12,18 +12,18 @@ class Product(db.Model):
 
     orders = db.relationship("Order", secondary="order_product")
 
-    def __init__(self, name, desc, price, quantity, category_id):
+    def __init__(self, name, description, price, quantity, category_id):
         self.name = name
-        self.desc = desc
+        self.description = description
         self.price = price
         self.quantity = quantity
         self.category_id = category_id
 
     @staticmethod
     def find_most_sold_products():
-        stmt = text("SELECT product.name, product.price, COUNT('order'.id) AS amount_sold FROM product"
+        stmt = text("SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product"
                     " JOIN order_product ON product.id = order_product.product_id"
-                    " JOIN 'order' on order_product.order_id = 'order'.id"
+                    " JOIN orders on order_product.order_id = orders.id"
                     " GROUP BY product.name"
                     " ORDER BY amount_sold DESC;")
 
@@ -42,9 +42,9 @@ class Product(db.Model):
 
     @staticmethod
     def find_least_sold_products():
-        stmt = text("SELECT product.name, product.price, COUNT('order'.id) AS amount_sold FROM product"
+        stmt = text("SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product"
                     " JOIN order_product ON product.id = order_product.product_id"
-                    " JOIN 'order' on order_product.order_id = 'order'.id"
+                    " JOIN orders on order_product.order_id = orders.id"
                     " GROUP BY product.name"
                     " ORDER BY amount_sold ASC;")
 

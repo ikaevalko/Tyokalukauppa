@@ -1,6 +1,9 @@
 from application import db
 
 class Order(db.Model):
+
+    __tablename__ = "orders"
+
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.Date, default=db.func.current_date())
     address = db.Column(db.String(32), nullable=False)
@@ -19,7 +22,10 @@ class Order(db.Model):
         self.city = city
 
 class OrderProduct(db.Model):
-    order_id = db.Column(db.Integer, db.ForeignKey("order.id"), primary_key=True)
+
+    __tablename__ = "order_product"
+
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), primary_key=True)
     product_id = db.Column("product_id", db.Integer, db.ForeignKey("product.id"), primary_key=True)
     amount = db.Column("amount", db.Integer, nullable=False)
 

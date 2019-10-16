@@ -3,7 +3,7 @@ from wtforms import StringField, TextAreaField, DecimalField, IntegerField, Subm
 
 class ProductFormNew(FlaskForm):
     name = StringField("Tuotteen nimi", [validators.Length(min=2, max=64)])
-    desc = TextAreaField("Tuotteen kuvaus", [validators.Length(min=0, max=400)])
+    description = TextAreaField("Tuotteen kuvaus", [validators.Length(min=0, max=400)])
     price = DecimalField("Hinta", [validators.NumberRange(min=0, max=9999)])
     quantity = IntegerField("Saldo", [validators.NumberRange(min=0, max=9999)])
     category = SelectField("Kategoria", coerce=int)
@@ -14,7 +14,7 @@ class ProductFormNew(FlaskForm):
 
 class ProductFormUpdate(FlaskForm):
     name = StringField("Tuotteen nimi", [validators.Length(min=2, max=64)])
-    desc = TextAreaField("Tuotteen kuvaus", [validators.Length(min=0, max=400)])
+    description = TextAreaField("Tuotteen kuvaus", [validators.Length(min=0, max=400)])
     price = DecimalField("Hinta", [validators.NumberRange(min=0, max=9999)])
     quantity = IntegerField("Saldo", [validators.NumberRange(min=0, max=9999)])
     category = SelectField("Kategoria", coerce=int)

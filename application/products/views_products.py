@@ -41,7 +41,7 @@ def products_create():
     ctgr = db.session().query(Category).filter(Category.id == form.category.data).first()
 
     # Lisätään uusi tuote
-    product = Product(form.name.data, form.desc.data, form.price.data, form.quantity.data, ctgr.id)
+    product = Product(form.name.data, form.description.data, form.price.data, form.quantity.data, ctgr.id)
 
     db.session().add(product)
     db.session().commit()
@@ -66,7 +66,7 @@ def products_update_form(product_id):
     # Jos tuote löytyi, tuodaan sen nykyiset tiedot lomakkeelle
     old_product = db.session().query(Product).filter(Product.id == product_id).first()
     form.name.data = old_product.name
-    form.desc.data = old_product.desc
+    form.description.data = old_product.description
     form.price.data = old_product.price
     form.quantity.data = old_product.quantity
     form.category.choices = [(c.id, c.name) for c in all_categories()]
@@ -96,7 +96,7 @@ def products_update(product_id):
     ctgr = db.session().query(Category).filter(Category.id == updateForm.category.data).first()
     product = db.session().query(Product).filter(Product.id == product_id).first()
     product.name = updateForm.name.data
-    product.desc = updateForm.desc.data
+    product.description = updateForm.description.data
     product.price = updateForm.price.data
     product.quantity = updateForm.quantity.data
     product.category_id = ctgr.id

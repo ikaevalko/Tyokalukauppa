@@ -37,10 +37,10 @@ SQL-kyselyt kategorian olemassaolon tarkistamiselle (käytetään muiden kyselyi
 ### 3. Tuotteet
 
 - Ylläpitäjä voi lisätä tietokantaan tuotteita ja määritellä niille kategorioita.<br>
-```INSERT INTO product (name, "desc", price, quantity, category_id) VALUES (?, ?, ?, ?, ?);```
+```INSERT INTO product (name, description, price, quantity, category_id) VALUES (?, ?, ?, ?, ?);```
 
 - Ylläpitäjä voi muokata olemassa olevien tuotteiden tietoja ja kategorioita.<br>
-```UPDATE product SET name=?, desc=?, price=?, quantity=? WHERE product.id = ?;```
+```UPDATE product SET name=?, description=?, price=?, quantity=?, category_id=? WHERE product.id = ?;```
 
 - Ylläpitäjä voi poistaa olemassa olevia tuotteita.<br>
 ```DELETE FROM product WHERE product.id = ?;```
@@ -49,7 +49,7 @@ SQL-kyselyt kategorian olemassaolon tarkistamiselle (käytetään muiden kyselyi
   ```
   SELECT product.id AS product_id, 
   product.name AS product_name, 
-  product."desc" AS product_desc, 
+  product.description AS product_description, 
   product.price AS product_price, 
   product.quantity AS product_quantity, 
   product.category_id AS product_category_id FROM product;
@@ -59,7 +59,7 @@ SQL-kyselyt kategorian olemassaolon tarkistamiselle (käytetään muiden kyselyi
   ```
   SELECT product.id AS product_id, 
   product.name AS product_name, 
-  product."desc" AS product_desc, 
+  product.description AS product_description, 
   product.price AS product_price, 
   product.quantity AS product_quantity, 
   product.category_id AS product_category_id FROM product 
@@ -70,7 +70,7 @@ SQL-kyselyt kategorian olemassaolon tarkistamiselle (käytetään muiden kyselyi
   ```
   SELECT product.id AS product_id, 
   product.name AS product_name, 
-  product."desc" AS product_desc, 
+  product.description AS product_description, 
   product.price AS product_price, 
   product.quantity AS product_quantity, 
   product.category_id AS product_category_id FROM product 
@@ -79,7 +79,7 @@ SQL-kyselyt kategorian olemassaolon tarkistamiselle (käytetään muiden kyselyi
   ```
   SELECT product.id AS product_id, 
   product.name AS product_name, 
-  product."desc" AS product_desc, 
+  product.description AS product_description, 
   product.price AS product_price, 
   product.quantity AS product_quantity, 
   product.category_id AS product_category_id FROM product 
@@ -94,37 +94,37 @@ SQL-kysely tuotteen olemassaolon tarkistamiselle (käytetään muiden kyselyiden
 ### 4. Tilaukset
 
 - Asiakas voi tehdä useita tilauksia. Tilaukseen sisältyy yksi tai useampi tuote.<br>
-```INSERT INTO "order" (date, address, postal_code, city, completed, account_id) VALUES (CURRENT_DATE, ?, ?, ?, ?, ?);```<br>
+```INSERT INTO orders (date, address, postal_code, city, completed, account_id) VALUES (CURRENT_DATE, ?, ?, ?, ?, ?);```<br>
 ```INSERT INTO order_product (order_id, product_id, amount) VALUES (?, ?, ?);```
 
 - Asiakas voi listata tekemänsä tilaukset.<br>
   ```
-  SELECT "order".id AS order_id, 
-  "order".date AS order_date, 
-  "order".address AS order_address, 
-  "order".postal_code AS order_postal_code, 
-  "order".city AS order_city, 
-  "order".completed AS order_completed, 
-  "order".account_id AS order_account_id FROM "order" 
-  WHERE "order".account_id = ?;
+  SELECT orders.id AS orders_id, 
+  orders.date AS orders_date, 
+  orders.address AS orders_address, 
+  orders.postal_code AS orders_postal_code, 
+  orders.city AS orders_city, 
+  orders.completed AS orders_completed, 
+  orders.account_id AS orders_account_id FROM orders 
+  WHERE orders.account_id = ?;
   ```
   
 - Ylläpitäjä voi listata kaikki tilaukset.<br>
   ```
-  SELECT "order".id AS order_id, 
-  "order".date AS order_date, 
-  "order".address AS order_address, 
-  "order".postal_code AS order_postal_code, 
-  "order".city AS order_city, 
-  "order".completed AS order_completed, 
-  "order".account_id AS order_account_id FROM "order";
+  SELECT orders.id AS orders_id, 
+  orders.date AS orders_date, 
+  orders.address AS orders_address, 
+  orders.postal_code AS orders_postal_code, 
+  orders.city AS orders_city, 
+  orders.completed AS orders_completed, 
+  orders.account_id AS orders_account_id FROM orders;
   ```
 
 - Asiakas tai ylläpitäjä voi listata tilauksen tuotteet (asiakas vain omien tilaustensa).<br>
   ```
   SELECT product.id AS product_id, 
   product.name AS product_name, 
-  product."desc" AS product_desc, 
+  product.description AS product_description, 
   product.price AS product_price, 
   product.quantity AS product_quantity, 
   product.category_id AS product_category_id FROM product, order_product 
@@ -132,7 +132,7 @@ SQL-kysely tuotteen olemassaolon tarkistamiselle (käytetään muiden kyselyiden
   ```
 
 - Ylläpitäjä voi merkitä tilauksia suoritetuksi.<br>
-```UPDATE "order" SET completed=? WHERE "order".id = ?;```
+```UPDATE orders SET completed=? WHERE orders.id = ?;```
 
 ### 5. Tilastot
 
@@ -141,9 +141,9 @@ SQL-kysely tuotteen olemassaolon tarkistamiselle (käytetään muiden kyselyiden
   Myydyimmät tuotteet (rivien määrä rajoitetaan kymmeneen ennen listausta):
   
   ```
-  SELECT product.name, product.price, COUNT('order'.id) AS amount_sold FROM product 
+  SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product 
   JOIN order_product ON product.id = order_product.product_id 
-  JOIN 'order' on order_product.order_id = 'order'.id 
+  JOIN orders on order_product.order_id = orders.id 
   GROUP BY product.name 
   ORDER BY amount_sold DESC;
   ```
@@ -151,9 +151,9 @@ SQL-kysely tuotteen olemassaolon tarkistamiselle (käytetään muiden kyselyiden
   Vähiten myydyt tuotteet (rivien määrä rajoitetaan kymmeneen ennen listausta):
   
   ```
-  SELECT product.name, product.price, COUNT('order'.id) AS amount_sold FROM product 
+  SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product 
   JOIN order_product ON product.id = order_product.product_id 
-  JOIN 'order' on order_product.order_id = 'order'.id 
+  JOIN orders on order_product.order_id = orders.id 
   GROUP BY product.name 
   ORDER BY amount_sold ASC;
   ```

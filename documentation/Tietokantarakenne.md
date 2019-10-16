@@ -2,14 +2,14 @@
 
 Tietokanta ei ole täysin normalisoitu. Order-taulun attribuutit address, postal_code ja city aiheuttavat tiedon toisteisuutta. Päätin olla luomatta näille käsitteille erillisiä tauluja pitääkseni tietokannan kohtuullisen yksinkertaisena. Normalisoinnin täydentäminen on suunnitelmissa jatkokehitykselle.
 
-Tietokantataulujen pää- ja viiteavaimille lisätään automaattisesti indeksit.
+Tietokantataulujen pääavaimille lisätään automaattisesti indeksit.
 
 ![](Tietokantakaavio.png)
 
 #### Account
 ```
 CREATE TABLE account (
-	id INTEGER NOT NULL, 
+    id INTEGER NOT NULL, 
     name VARCHAR(32) NOT NULL, 
     username VARCHAR(32) NOT NULL, 
     password VARCHAR(64) NOT NULL, 
@@ -22,18 +22,18 @@ CREATE TABLE account (
 #### Category
 ```
 CREATE TABLE category (
-	id INTEGER NOT NULL, 
-	name VARCHAR(24) NOT NULL, 
-	PRIMARY KEY (id)
+    id INTEGER NOT NULL, 
+    name VARCHAR(24) NOT NULL, 
+    PRIMARY KEY (id)
 );
 ```
 
 #### Product
 ```
 CREATE TABLE product (
-	id INTEGER NOT NULL, 
+    id INTEGER NOT NULL, 
     name VARCHAR(64) NOT NULL, 
-    "desc" TEXT NOT NULL, 
+    description TEXT NOT NULL, 
     price NUMERIC(6, 2) NOT NULL, 
     quantity INTEGER NOT NULL, 
     category_id INTEGER, 
@@ -42,12 +42,12 @@ CREATE TABLE product (
 );
 ```
 
-#### Order
-Huom. SQLAlchemy luo Order-taulun nimen lainausmerkkien kanssa. Syytä tähän en saanut selville.
+#### Orders
+Taulun nimi on monikossa, koska nimi "Order" aiheuttaa ongelmia SQLAlchemyn kanssa.
 
 ```
-CREATE TABLE IF NOT EXISTS "order" (
-	id INTEGER NOT NULL, 
+CREATE TABLE orders (
+    id INTEGER NOT NULL, 
     date DATE, 
     address VARCHAR(32) NOT NULL, 
     postal_code INTEGER NOT NULL, 
@@ -63,11 +63,11 @@ CREATE TABLE IF NOT EXISTS "order" (
 #### OrderProduct (liitostaulu)
 ```
 CREATE TABLE order_product (
-	order_id INTEGER NOT NULL, 
+    order_id INTEGER NOT NULL, 
     product_id INTEGER NOT NULL, 
     amount INTEGER NOT NULL, 
     PRIMARY KEY (order_id, product_id), 
-    FOREIGN KEY(order_id) REFERENCES "order" (id), 
+    FOREIGN KEY(order_id) REFERENCES orders (id), 
     FOREIGN KEY(product_id) REFERENCES product (id)
 );
 ```
