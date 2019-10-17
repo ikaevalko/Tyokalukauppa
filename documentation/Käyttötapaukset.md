@@ -144,7 +144,7 @@ SQL-kysely tuotteen olemassaolon tarkistamiselle (käytetään muiden kyselyiden
   SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product 
   JOIN order_product ON product.id = order_product.product_id 
   JOIN orders on order_product.order_id = orders.id 
-  GROUP BY product.name 
+  GROUP BY product.name, product.price 
   ORDER BY amount_sold DESC;
   ```
   
@@ -154,7 +154,7 @@ SQL-kysely tuotteen olemassaolon tarkistamiselle (käytetään muiden kyselyiden
   SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product 
   JOIN order_product ON product.id = order_product.product_id 
   JOIN orders on order_product.order_id = orders.id 
-  GROUP BY product.name 
+  GROUP BY product.name, product.price 
   ORDER BY amount_sold ASC;
   ```
   

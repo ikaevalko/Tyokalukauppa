@@ -23,8 +23,8 @@ class Product(db.Model):
     def find_most_sold_products():
         stmt = text("SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product"
                     " JOIN order_product ON product.id = order_product.product_id"
-                    " JOIN orders on order_product.order_id = orders.id"
-                    " GROUP BY product.name"
+                    " JOIN orders ON order_product.order_id = orders.id"
+                    " GROUP BY product.name, product.price"
                     " ORDER BY amount_sold DESC;")
 
         result = db.engine.execute(stmt)
@@ -44,8 +44,8 @@ class Product(db.Model):
     def find_least_sold_products():
         stmt = text("SELECT product.name, product.price, COUNT(orders.id) AS amount_sold FROM product"
                     " JOIN order_product ON product.id = order_product.product_id"
-                    " JOIN orders on order_product.order_id = orders.id"
-                    " GROUP BY product.name"
+                    " JOIN orders ON order_product.order_id = orders.id"
+                    " GROUP BY product.name, product.price"
                     " ORDER BY amount_sold ASC;")
 
         result = db.engine.execute(stmt)
