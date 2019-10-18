@@ -1,7 +1,5 @@
 ## Sovelluksen rajoitteet ja puuttuvat ominaisuudet
 
-- Sovelluksessa ei ole ominaisuutta tuotteiden hakemiseen
-
 - Kyselyiden tuloksille ei tehdä sivutusta, mikä hidastaa sovelluksen toimintaa rivimäärien kasvaessa
 
 - Käyttäjä ei voi vaihtaa salasanaa

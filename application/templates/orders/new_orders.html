@@ -6,7 +6,7 @@
     <div class="col-lg-5 my-5 ml-5">
         <div class="form-group">
             {{ form.address.label }}
-            {{ form.address }}
+            {{ form.address(autofocus=true) }}
         </div>
         <div class="form-group">
             {{ form.postal_code.label }}

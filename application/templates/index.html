@@ -6,7 +6,7 @@
 
     <div class="col-lg-10">
         <div class="row mb-4">
-            <div class="col-lg-1 d-inline">
+            <div class="col- d-inline">
                 {% if ctgr_page is not none and ctgr_page is defined %}
                 <a href="{{ url_for('index') }}" class="btn btn-outline-dark">
                     <i class="fas fa-chevron-left my-2"></i>
@@ -17,9 +17,19 @@
                 {% if title is not none and title|length > 0 %}
                 <h2>{{ title }}</h2>
                 {% endif %}
+                {% if ctgr_page is none or ctgr_page is not defined %}
+                <form method="POST" action="{{ url_for('search') }}">
+                    <div class="form-inline">
+                        <input type="text" name="query" placeholder="Etsi tuotteita">
+                        <button type="submit" class="btn btn-outline-dark btn-sm ml-1">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+                {% endif %}
             </div>
-            <div class="col-lg-1 d-inline"></div>
-            <div class="col-lg-1 my-auto ml-4 d-inline">
+            <div class="col-lg-2 d-inline"></div>
+            <div class="col-lg-1 my-auto ml-2 d-inline">
                 {% if ctgr_page is none or ctgr_page is not defined %}
                 <form method="POST" action="{{ url_for('index') }}">
                     {{ order_by_form.options(**{"onchange":"this.form.submit()"}) }}

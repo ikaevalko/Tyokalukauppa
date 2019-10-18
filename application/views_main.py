@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, url_for, redirect
 from application import app
 from application.categories.models_categories import Category
 from application.products.models_products import Product
@@ -26,6 +26,22 @@ def index():
 
     return render_template("index.html", categories = all_categories(), products = all_products(),\
                                 message = request.args.get("action_message"), order_by_form = order_by_form)
+
+@app.route("/search/", methods=["POST"])
+def search():
+
+    query = request.form["query"]
+
+    if query is None:
+        return redirect(url_for("index"))
+
+    q = "%{}%".format(query)
+    results = Product.query.filter(Product.name.like(q)).all()
+
+    if results is None or len(results) <= 0:
+        return redirect(url_for("index", action_message = "Haku ei tuottanut tuloksia"))
+
+    return render_template("index.html", categories = all_categories(), products = results, order_by_form = OrderByForm())
 
 def all_categories():
     return Category.query.all()

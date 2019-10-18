@@ -86,7 +86,16 @@ SQL-kyselyt kategorian olemassaolon tarkistamiselle (käytetään muiden kyselyi
   ORDER BY product.price DESC;
   ```
 
-- Asiakas tai ylläpitäjä voi hakea tuotteita tietokannasta. **Ei vielä toteutettu.**
+- Asiakas tai ylläpitäjä voi hakea tuotteita.<br>
+  ```
+  SELECT product.id AS product_id, 
+  product.name AS product_name, 
+  product.description AS product_description, 
+  product.price AS product_price, 
+  product.quantity AS product_quantity, 
+  product.category_id AS product_category_id FROM product 
+  WHERE product.name LIKE ?;
+  ```
 
 SQL-kysely tuotteen olemassaolon tarkistamiselle (käytetään muiden kyselyiden yhteydessä):<br>
 ```SELECT EXISTS (SELECT * FROM product WHERE product.id = ?);```

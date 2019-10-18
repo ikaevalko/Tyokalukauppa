@@ -14,12 +14,14 @@ def auth_login():
         return render_template("auth/loginform.html", categories = Category.query.all(), form = LoginForm())
 
     form = LoginForm(request.form)
-
     user = User.query.filter_by(username=form.username.data).first()
+
+    # Tarkistetaan käyttäjä ja salasana
     if not user or not bcrypt.check_password_hash(user.password, form.password.data):
         return render_template("auth/loginform.html", categories = Category.query.all(), form = form,
                                 error = "Virheellinen käyttäjänimi tai salasana")
 
+    # Jos käyttäjä tunnistettiin, kirjaudutaan sisään
     login_user(user)
     return redirect(url_for("index"))
 
@@ -35,15 +37,18 @@ def auth_register():
 
     form = RegisterForm(request.form)
 
+    # Validoidaan syöte
     if not form.validate():
         return render_template("auth/registerform.html", categories = Category.query.all(), form = form)
 
     existing_user = User.query.filter_by(username=form.username.data).first()
 
+    # Tarkistetaan, onko käyttäjänimi uniikki
     if existing_user:
         form.username.errors.append("Käyttäjänimi on jo käytössä")
         return render_template("auth/registerform.html", categories = Category.query.all(), form = form)
 
+    # Luodaan uusi käyttäjä
     user = User(form.name.data, form.username.data, bcrypt.generate_password_hash(form.password.data).decode("utf-8"), False)
 
     db.session().add(user)
