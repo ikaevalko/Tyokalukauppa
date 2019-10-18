@@ -36,7 +36,7 @@ def search():
         return redirect(url_for("index"))
 
     q = "%{}%".format(query)
-    results = Product.query.filter(Product.name.like(q)).all()
+    results = Product.query.filter(Product.name.ilike(q)).all()
 
     if results is None or len(results) <= 0:
         return redirect(url_for("index", action_message = "Haku ei tuottanut tuloksia"))
