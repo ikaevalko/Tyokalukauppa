@@ -120,6 +120,13 @@ def products_delete(product_id):
 
     return redirect(url_for("index", action_message = "Tuotteen poistaminen epäonnistui"))
 
+@app.route("/products/<product_id>/")
+def show_product(product_id):
+
+    product = Product.query.filter(Product.id == product_id).first()
+
+    return render_template("products/show_product.html", categories = all_categories(), product = product)
+
 @app.route("/cart/add/<product_id>/")
 @login_required
 def add_product_to_cart(product_id):

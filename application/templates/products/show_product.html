@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="col-lg-9 my-4">
+
+    <div class="col-lg-10">
+        <div class="row mb-4">
+            <div class="col-lg-1 d-inline">
+                <a href="{{ url_for('index') }}" class="btn btn-outline-dark">
+                    <i class="fas fa-chevron-left my-2"></i>
+                </a>
+            </div>
+            <div class="col-lg-6 d-inline">
+                <h2>{{ product.name }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-10 ml-5">
+        <p>
+        {{ product.description }}
+        </p>
+
+        {% if current_user.is_admin %}
+            <a href="{{ url_for('products_update_form', product_id=product.id) }}" class="btn btn-primary mt-4">Päivitä</a>
+            <a href="{{ url_for('products_delete', product_id=product.id) }}" class="btn btn-primary mt-4 ml-2"
+                onclick="return confirm('Poistetaanko {{ product.name }}?')">Poista</a>
+        {% else %}
+            <a href="{{ url_for('add_product_to_cart', product_id=product.id) }}" class="btn btn-primary mt-4">Lisää koriin</a>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

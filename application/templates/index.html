@@ -50,7 +50,7 @@
             <div class="card h-100">
                 <div class="card-body">
                     <h4 class="card-title">
-                        <a href="#" class="text-dark">{{ product.name }}</a>
+                        <a href="{{ url_for('show_product', product_id=product.id) }}" class="text-dark">{{ product.name }}</a>
                     </h4>
                     <p class="card-text text-truncate">{{ product.description }}</p>
                     <div class="d-flex justify-content-between">
